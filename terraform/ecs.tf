@@ -1,60 +1,43 @@
-resource "aws_ecs_cluster" "devopschallenge" {
+resource "aws_ecs_cluster" "devops_challenge" {
   name = var.project_name
 }
 
-# resource "aws_ecs_task_definition" "powered_testing" {
-#   family             = "powered_testing"
-#   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-#   task_role_arn      = aws_iam_role.ecs_task_execution_role.arn
+data "local_file" "container_task_definition" {
+  filename = "files/container_def.json"
+}
 
-#   container_definitions = <<CONTAINER
-# [
-#   {
-#     "name": "powered_testing",
-#     "image": "${aws_ecr_repository.powered_testing_repo.repository_url}:latest",
-#     "cpu": 1024,
-#     "memory": 2048,
-#     "entrypoint": ["/Run.sh"],
-#     "essential": true,
-#     "environment": [
-#       {
-#         "name": "VPC_CIDR",
-#         "value": "${var.vpc_cidr_range}"
-#       }
-#     ],
-#     "portMappings": [
-#       {
-#         "containerPort": 80,
-#         "hostPort": 80,
-#         "protocol": "tcp"
-#       }
-#     ],
-#     "secrets": [
-#         {
-#           "name": "githubUser",
-#           "valueFrom": "arn:aws:secretsmanager:eu-west-1:${var.account_id}:secret:githubToken-Qcjdzi:Username::"
-#         },
-#         {
-#           "name": "githubToken",
-#           "valueFrom": "arn:aws:secretsmanager:eu-west-1:${var.account_id}:secret:githubToken-Qcjdzi:Token::"
-#         }
-#     ],
-#     "logConfiguration": {
-#       "logDriver": "awslogs",
-#       "options": {
-#         "awslogs-region": "${var.region}",
-#         "awslogs-group": "/ecs/powered_testing",
-#         "awslogs-stream-prefix": "powered_testing",
-#         "awslogs-create-group": "true"
-#       }
-#     }
-#   }
-# ]
-# CONTAINER
+resource "aws_ecs_task_definition" "devops_challenge" {
+  family                   = "devops_challenge"
+  container_definitions    = data.local_file.container_task_definition.content
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
+  network_mode             = "awsvpc"
+  cpu                      = "256"
+  memory                   = "512"
+  requires_compatibilities = ["FARGATE"]
+}
 
+resource "aws_ecs_service" "devops_challenge" {
+  name            = "devops_challenge"
+  cluster         = aws_ecs_cluster.devops_challenge.id
+  task_definition = aws_ecs_task_definition.devops_challenge.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
 
-#   network_mode             = "awsvpc"
-#   cpu                      = "1024"
-#   memory                   = "2048"
-#   requires_compatibilities = ["FARGATE"]
-# }
+  lifecycle {
+    ignore_changes = [
+    desired_count]
+  }
+
+  network_configuration {
+    subnets          = module.vpc.public_subnets
+    security_groups  = [aws_security_group.ecs_task.id]
+    assign_public_ip = true
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.ecs.arn
+    container_name   = "devops_challenge"
+    container_port   = 80
+  }
+}

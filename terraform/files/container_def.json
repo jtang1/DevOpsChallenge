@@ -1,0 +1,23 @@
+[
+    {
+      "name": "devops_challenge",
+      "image": "836668077738.dkr.ecr.eu-west-1.amazonaws.com/devopschallenge:latest",
+      "cpu": 256,
+      "memory": 512,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-region": "eu-west-1",
+          "awslogs-group": "/ecs/devopschallenge",
+          "awslogs-stream-prefix": "devopschallenge"
+        } 
+      }
+    }
+]

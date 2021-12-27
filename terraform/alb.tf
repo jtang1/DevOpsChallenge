@@ -7,18 +7,18 @@ resource "aws_lb" "ecs" {
 
   enable_deletion_protection = true
 
-#   access_logs {
-#     bucket  = aws_s3_bucket.b.bucket
-#     prefix  = "${var.project_name}-lb"
-#     enabled = true
-#   }
+  #   access_logs {
+  #     bucket  = aws_s3_bucket.b.bucket
+  #     prefix  = "${var.project_name}-lb"
+  #     enabled = true
+  #   }
 }
 
 resource "aws_lb_target_group" "ecs" {
-  name     = "${var.project_name}-ecs"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = module.vpc.vpc_id
+  name        = "${var.project_name}-ecs"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = module.vpc.vpc_id
   target_type = "ip"
 
   health_check {
@@ -32,7 +32,7 @@ resource "aws_lb_target_group" "ecs" {
   }
 
   tags = {
-    Name = "dev-to"
+    Name    = "dev-to"
     Project = "dev-to"
     Billing = "dev-to"
   }

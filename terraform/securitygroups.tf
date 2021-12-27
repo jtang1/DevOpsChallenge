@@ -13,50 +13,50 @@ resource "aws_security_group" "ecs_task" {
 }
 
 resource "aws_security_group_rule" "ingress_load_balancer_http" {
-  from_port = 80
-  protocol = "tcp"
+  from_port         = 80
+  protocol          = "tcp"
   security_group_id = aws_security_group.load_balancer.id
-  to_port = 80
+  to_port           = 80
   cidr_blocks = [
-    "0.0.0.0/0"]
+  "0.0.0.0/0"]
   type = "ingress"
 }
 
 resource "aws_security_group_rule" "ingress_load_balancer_https" {
-  from_port = 443
-  protocol = "tcp"
+  from_port         = 443
+  protocol          = "tcp"
   security_group_id = aws_security_group.load_balancer.id
-  to_port = 443
+  to_port           = 443
   cidr_blocks = [
-    "0.0.0.0/0"]
+  "0.0.0.0/0"]
   type = "ingress"
 }
 
 resource "aws_security_group_rule" "ingress_ecs_task_elb" {
-  from_port = 80
-  protocol = "tcp"
-  security_group_id = aws_security_group.ecs_task.id
-  to_port = 80
+  from_port                = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.ecs_task.id
+  to_port                  = 80
   source_security_group_id = aws_security_group.load_balancer.id
-  type = "ingress"
+  type                     = "ingress"
 }
 
 resource "aws_security_group_rule" "egress_load_balancer" {
-  type = "egress"
+  type      = "egress"
   from_port = 0
-  to_port = 65535
-  protocol = "tcp"
+  to_port   = 65535
+  protocol  = "tcp"
   cidr_blocks = [
-    "0.0.0.0/0"]
+  "0.0.0.0/0"]
   security_group_id = aws_security_group.load_balancer.id
 }
 
 resource "aws_security_group_rule" "egress_ecs_task" {
-  type = "egress"
+  type      = "egress"
   from_port = 0
-  to_port = 65535
-  protocol = "tcp"
+  to_port   = 65535
+  protocol  = "tcp"
   cidr_blocks = [
-    "0.0.0.0/0"]
+  "0.0.0.0/0"]
   security_group_id = aws_security_group.ecs_task.id
 }
