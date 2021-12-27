@@ -30,12 +30,6 @@ resource "aws_lb_target_group" "ecs" {
     healthy_threshold   = 5
     unhealthy_threshold = 5
   }
-
-  tags = {
-    Name    = "dev-to"
-    Project = "dev-to"
-    Billing = "dev-to"
-  }
 }
 
 resource "aws_lb_listener" "http" {
