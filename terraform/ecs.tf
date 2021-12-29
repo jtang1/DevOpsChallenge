@@ -7,7 +7,7 @@ data "local_file" "container_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "devops_challenge" {
-  family                   = "devops_challenge"
+  family                   = var.project_name
   container_definitions    = data.local_file.container_task_definition.content
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
@@ -18,7 +18,7 @@ resource "aws_ecs_task_definition" "devops_challenge" {
 }
 
 # resource "aws_ecs_service" "devops_challenge" {
-#   name            = "devops_challenge"
+#   name            = var.project_name
 #   cluster         = aws_ecs_cluster.devops_challenge.id
 #   task_definition = aws_ecs_task_definition.devops_challenge.arn
 #   desired_count   = 1
