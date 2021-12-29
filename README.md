@@ -1,6 +1,6 @@
 # DevOpsChallenge
 
-This repo contains the infrastructure to host a scalable website.
+This repo contains the infrastructure to host a scalable website. The website can be accessed here - devopschallenge-alb-ecs-46581156.eu-west-1.elb.amazonaws.com.
 
 The infrastructure utilises AWS resources to host the website, along with the use of Docker.
 
@@ -11,7 +11,7 @@ The website is hosted using Elastic Container Service (ECS), pulling the latest 
 The ECS service's launch configuration is Fargate.
 
 ## Architecture Diagram
-![](diagram.jpeg)
+![](diagram.jpg)
 
 ## Monitoring
 The containers in the tasks send log information to CloudWatch logs to monitor the health and performance of the application.
