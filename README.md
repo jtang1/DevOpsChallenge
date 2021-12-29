@@ -10,6 +10,8 @@ The website is hosted using Elastic Container Service (ECS), pulling the latest 
 
 The Fargate launch configuration was chosen to reduce the management of EC2 instances.
 
+![](diagram.jpeg)
+
 ## Scaling
 The scalability for this website is achieved by using autoscaling to increase or decrease the desired count of tasks in the ECS service. The trigger for this is if the CPU or the Memory consumption increases to above 80%. This is currently configured to reach a max task size of 10.
 
