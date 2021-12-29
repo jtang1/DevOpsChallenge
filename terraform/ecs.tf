@@ -25,8 +25,7 @@ resource "aws_ecs_task_definition" "devops_challenge" {
 #   launch_type     = "FARGATE"
 
 #   lifecycle {
-#     ignore_changes = [
-#     desired_count]
+#     ignore_changes = [desired_count]
 #   }
 
 #   network_configuration {
