@@ -1,4 +1,4 @@
-# DevOpsChallenge
+# DevOps Challenge
 
 This repo contains the infrastructure to host a scalable website containing some text and an image. The website can be accessed [here](http://devopschallenge-alb-ecs-46581156.eu-west-1.elb.amazonaws.com).
 
@@ -6,9 +6,7 @@ The infrastructure utilises AWS resources to host the website, along with the us
 
 An Nginx docker image was built with a custom HTML, and stored in Elastic Container Registry (ECR).
 
-The website is hosted using Elastic Container Service (ECS), pulling the latest image from ECR. The Virtual Private Cloud (VPC) is created with 3 public subnets in 3 separate availability zones for high availability. An Application Load Balancer (ALB) distributes the traffic to each of the availability zones. A health check has been created for the ALB so traffic is only routed to the heathly targets.
-
-The ECS service's launch configuration is Fargate.
+The website is hosted using Elastic Container Service (ECS) Fargate, pulling the latest image from ECR. The Virtual Private Cloud (VPC) is created with 3 public subnets in 3 separate availability zones for high availability. An Application Load Balancer (ALB) distributes the traffic to each of the availability zones. A health check has been created for the ALB so traffic is only routed to the heathly targets.
 
 ## Architecture Diagram
 ![](diagram.jpg)
