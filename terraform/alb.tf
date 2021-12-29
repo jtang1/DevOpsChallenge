@@ -7,11 +7,11 @@ resource "aws_lb" "ecs" {
 
   enable_deletion_protection = true
 
-  #   access_logs {
-  #     bucket  = aws_s3_bucket.b.bucket
-  #     prefix  = "${var.project_name}-lb"
-  #     enabled = true
-  #   }
+  access_logs {
+    bucket  = aws_s3_bucket.lb_logs.bucket
+    prefix  = "${var.project_name}-lb"
+    enabled = true
+  }
 }
 
 resource "aws_lb_target_group" "ecs" {

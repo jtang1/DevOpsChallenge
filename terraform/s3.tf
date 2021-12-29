@@ -1,23 +1,17 @@
-# resource "aws_s3_bucket" "lb_logs" {
-#   bucket = "${var.project_name}-logs"
-#   acl    = "log-delivery-write"
-
-#   versioning {
-#     enabled = true
-#   }
-# }
-
-resource "aws_s3_bucket" "log_bucket" {
-  bucket = "${var.project_name}-log-bucket"
+resource "aws_s3_bucket" "lb_logs" {
+  bucket = "${var.project_name}-lb-logs"
   acl    = "log-delivery-write"
+
+  versioning {
+    enabled = true
+  }
 }
 
-resource "aws_s3_bucket" "b" {
-  bucket = "${var.project_name}-test-bucket"
-  acl    = "private"
+data "local_file" "s3_access_log_policy" {
+  filename = "files/s3_access_log_policy.json"
+}
 
-  logging {
-    target_bucket = aws_s3_bucket.log_bucket.id
-    target_prefix = "log/"
-  }
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.lb_logs.id
+  policy = data.local_file.s3_access_log_policy.content
 }
