@@ -10,6 +10,9 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -68,7 +71,6 @@ jobs:
             repo: context.repo.repo,
             body: output
           })
-
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    #   run: terraform apply -auto-approve
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      run: terraform apply -auto-approve
