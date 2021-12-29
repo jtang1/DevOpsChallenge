@@ -23,18 +23,21 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: terraform init -input=false
-        working-directory: /terraform
+      with:
+        directory: /terraform
     
     - name: Terraform fmt
       id: fmt
       run: terraform fmt -check
-        working-directory: /terraform
+      with:
+        directory: /terraform
       continue-on-error: true
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
-        working-directory: /terraform
+      with:
+        directory: /terraform
 
     - name: Terraform Plan
       id: plan
@@ -42,7 +45,8 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: terraform plan -no-color
-        working-directory: /terraform
+      with:
+        directory: /terraform
       continue-on-error: true
     
     - uses: actions/github-script@v2
@@ -76,4 +80,5 @@ jobs:
     # - name: Terraform Apply
     #   if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     #   run: terraform apply -auto-approve
-    #     working-directory: /terraform
+    #   with:
+        # directory: /terraform
