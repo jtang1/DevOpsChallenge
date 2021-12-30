@@ -21,7 +21,7 @@ resource "aws_security_group_rule" "ingress_load_balancer" {
   type              = "ingress"
 }
 
-resource "aws_security_group_rule" "ingress_ecs_task_elb" {
+resource "aws_security_group_rule" "ingress_ecs_task" {
   from_port                = 80
   protocol                 = "tcp"
   security_group_id        = aws_security_group.ecs_task.id
