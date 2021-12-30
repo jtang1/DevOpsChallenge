@@ -19,7 +19,7 @@ Access logs are written to S3 which captures detailed information about the requ
 The scalability for this application is achieved by using autoscaling to increase or decrease the desired count of tasks in the ECS service. The trigger for this is if the CPU or the Memory consumption increases to above 80%. This is currently configured to reach a max task size of 10.
 
 ## Security
-Security groups have been configured for the ALB and for the ECS service. Only inbound traffic to port 80 is allowed on the ALB and then subsequently, the container instances.
+Security groups have been configured for the ALB and for the ECS service. Only inbound traffic to port 80 is allowed on the ALB and then subsequently, the ECS service.
 
 ## Automation
 A GitHub Actions deployment pipeline has been created to implement CI/CD practices. On creation of a PR to the main branch, a workflow is automatically triggered to format, initialise, and validate the code. A plan is subsequently generated and posted as a comment on the PR.
