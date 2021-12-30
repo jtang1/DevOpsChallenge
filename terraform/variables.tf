@@ -7,7 +7,7 @@ variable "project_name" {
 }
 
 variable "elb_account_id" {
-  default = 156460612806
+  default = "156460612806"
   description = "A region specific Elastic Load Balancing account ID. The default is set for eu-west-1."
 }
 
