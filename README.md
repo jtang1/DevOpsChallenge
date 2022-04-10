@@ -1,6 +1,6 @@
 # DevOps Challenge
 
-This repo contains the infrastructure to host a scalable website containing some text and an image. The website can be accessed [here](http://devopschallenge-alb-ecs-46581156.eu-west-1.elb.amazonaws.com).
+This repo contains the infrastructure to host a scalable website containing some text and an image.
 
 The infrastructure utilises AWS resources to host the website, along with the use of Docker.
 
